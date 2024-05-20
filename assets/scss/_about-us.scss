@@ -1,0 +1,560 @@
+/*----------------------------------------
+  05. About us style
+----------------------------------------*/
+
+.about-top {
+	padding: 340px 0 243px;
+    @media #{$xx-layout} {
+        padding: 250px 0 243px;
+    }
+    @media #{$xl-layout} {
+        padding: 250px 0 243px;
+    }
+    @media #{$lg-layout} {
+        padding: 220px 0 200px;
+    }
+    @media #{$md-layout} {
+        padding: 150px 0 205px;
+    }
+    @media #{$xs-layout} {
+        padding: 150px 0 150px;
+    }
+    @media #{$sm-layout} {
+        padding: 120px 0 150px;
+    }
+}
+
+.about-content {
+    span {
+        font-size: 16px;
+        letter-spacing: 16.67px;
+        text-transform: uppercase;
+        font-family: $proximanova;
+        display: block;
+        @media #{$lg-layout} {
+            letter-spacing: 14.67px;
+        }
+        @media #{$md-layout} {
+            letter-spacing: 14.67px;
+        }
+        @media #{$xs-layout} {
+            letter-spacing: 4.67px;
+        }
+    }
+    h1 {
+        font-size: 64px;
+        margin: 15px 0 32px;
+        @media #{$xl-layout} {
+            font-size: 60px;
+        }
+        @media #{$lg-layout} {
+            font-size: 50px;
+        }
+        @media #{$md-layout} {
+            font-size: 43px;
+        }
+        @media #{$xs-layout} {
+            font-size: 30px;
+            margin: 15px 0 15px;
+            line-height: 1.3;
+        }
+    }
+    p {
+        font-size: 22px;
+        line-height: 46px;
+        width: 68%;
+        margin: 0 auto;
+        @media #{$xl-layout} {
+            width: 73%;
+        }
+        @media #{$lg-layout} {
+            width: 83%;
+            font-size: 20px;
+            line-height: 40px;
+        }
+        @media #{$md-layout} {
+            width: 85%;
+            font-size: 20px;
+            line-height: 40px;
+        }
+        @media #{$xs-layout} {
+            font-size: 19px;
+            line-height: 35px;
+            width: 100%;
+        }
+    }
+}
+
+.about-bottom {
+    margin-top: -105px;
+    .about-photography-img {
+        overflow: hidden;
+        img {
+            width: 100%;
+            transition: all .4s ease 0s;
+        }
+        &:hover {
+            img {
+                transform: scale(1.1);
+            }
+        }
+    }
+}
+
+.skill-content {
+    margin: 10px 0 0px;
+    span {
+        font-size: 16px;
+        letter-spacing: 16.67px;
+        text-transform: uppercase;
+        font-family: $proximanova;
+        display: block;
+    }
+    h2 {
+        font-size: 54px;
+        margin: 8px 0 15px;
+        @media #{$xs-layout} {
+            font-size: 35px;
+        }
+    }
+    p {
+        font-size: 22px;
+        line-height: 46px;
+        width: 78%;
+        margin: 0;
+        @media #{$lg-layout} {
+            font-size: 20px;
+            line-height: 40px;
+            width: 100%;
+        }
+        @media #{$xs-layout} {
+            font-size: 18px;
+            line-height: 36px;
+            width: 100%;
+        }
+    }
+}
+
+.skill-bar {
+    overflow: hidden;
+    margin: 0 0 0 70px;
+    @media #{$md-layout} {
+        margin: 50px 0 0 0px;
+    }
+    @media #{$xs-layout} {
+        margin: 35px 0 0 0px;
+    }
+    .skill-bar-item {
+        padding-bottom: 45px;
+        position: relative;
+        @media #{$lg-layout} {
+            padding-bottom: 35px;
+        }
+        @media #{$md-layout} {
+            padding-bottom: 35px;
+        }
+        @media #{$xs-layout} {
+            padding-bottom: 25px;
+        }
+        &:last-child {
+            padding-bottom: 0px;
+        }
+        > span {
+            font-size: 16px;
+            text-align: center;
+            z-index: 2;
+        }
+        .progress {
+            background: #D8D8D8 none repeat scroll 0 0;
+            border-radius: 0;
+            box-shadow: none;
+            height: 5px;
+            margin-top: 14px;
+            overflow: visible;
+            .progress-bar {
+                background: #434343 none repeat scroll 0 0;
+                box-shadow: none;
+                overflow: inherit;
+                position: relative;
+                span.text-top {
+                    font-size: 16px;
+                    position: absolute;
+                    right: 0;
+                    top: -37px;
+                    color: #434343;
+                }
+            }
+        }
+        &:nth-child(1) .progress-bar {
+            width: 95%;
+        }
+        &:nth-child(2) .progress-bar {
+            width: 90%;
+        }
+        &:nth-child(3) .progress-bar {
+            width: 85%;
+        }
+    }
+}
+
+.team-img {
+    overflow: hidden;
+    img {
+        width: 100%;
+        transition: all .4s ease 0s;
+    }
+    &.team-img-mrg1 {
+        margin: 0 46px 0 0;
+        @media #{$xx-layout} {
+            margin: 0 0px 0 0;
+        }
+        @media #{$xl-layout} {
+            margin: 0 0px 0 0;
+        }
+        @media #{$lg-layout} {
+            margin: 0 0px 0 0;
+        }
+        @media #{$md-layout} {
+            margin: 0 0px 30px 0;
+        }
+        @media #{$xs-layout} {
+            margin: 0 0px 30px 0;
+        }
+    }
+    &.team-img-mrg2 {
+        margin: 0 0px 0 65px;
+        @media #{$xx-layout} {
+            margin: 0 0px 0 0px;
+        }
+        @media #{$xl-layout} {
+            margin: 0 0px 0 0px;
+        }
+        @media #{$lg-layout} {
+            margin: 0 0px 0 0px;
+        }
+        @media #{$md-layout} {
+            margin: 0 0px 30px 0;
+        }
+        @media #{$xs-layout} {
+            margin: 0 0px 30px 0;
+        }
+    }
+    &:hover {
+        img {
+            transform: scale(1.1);
+        }
+    }
+}
+
+.team-content {
+    h3 {
+        font-size: 32px;
+        font-weight: bold;
+        margin: 0;
+    }
+    span {
+        font-family: $proximanova;
+        font-size: 16px;
+        letter-spacing: 16.67px;
+        text-transform: uppercase;
+        display: block;
+        margin: 12px 0 25px;
+        @media #{$lg-layout} {
+            margin: 12px 0 20px;
+        }
+        @media #{$md-layout} {
+            margin: 12px 0 20px;
+        }
+        @media #{$xs-layout} {
+            letter-spacing: 8.67px;
+            margin: 12px 0 20px;
+        }
+    }
+    p {
+        line-height: 38px;
+        margin: 0 0 47px;
+        @media #{$lg-layout} {
+            line-height: 36px;
+            margin: 0 0 25px;
+        }
+        @media #{$md-layout} {
+            margin: 0 0 25px;
+        }
+        @media #{$xs-layout} {
+            line-height: 35px;
+            margin: 0 0 30px;
+            font-size: 17px;
+        }
+    }
+    &.team-content-mrg1 {
+        margin: 0 0 0 11px;
+    }
+}
+
+.social-style-2 {
+    display: flex;
+    flex-wrap: wrap;
+    a {
+        display: inline-block;
+        width: 37px;
+        height: 37px;
+        line-height: 35px;
+        border-radius: 100%;
+        text-align: center;
+        margin-right: 20px;
+        background-color: #C6C6C6;
+        &:last-child {
+            margin-right: 0;
+        }
+        
+        svg {
+            path {
+                fill: $white;
+                transition: all .3s ease 0s;
+            }
+        }
+        &:hover {
+            &.facebook {
+                background-color: #3b5999;
+            }
+            &.twitter {
+                background-color: #55acee;
+            }
+            &.youtube {
+                background-color: #cd201f;
+            }
+            &.dribbble {
+                background-color: #ea4c89;
+            }
+        }
+    }
+}
+
+.video-area {
+    padding: 380px 0 380px;
+    @media #{$xx-layout} {
+        padding: 200px 0 200px;
+    }
+    @media #{$xl-layout} {
+        padding: 200px 0 200px;
+    }
+    @media #{$lg-layout} {
+        padding: 170px 0 170px;
+    }
+    @media #{$md-layout} {
+        padding: 150px 0 150px;
+    }
+    @media #{$xs-layout} {
+        padding: 100px 0 100px;
+    }
+}
+
+.video-content {
+    .video-popup {
+        a {
+            display: inline-block;
+            width: 129px;
+            height: 129px;
+            line-height: 129px;
+            border: 1px solid $white;
+            border-radius: 100%;
+            text-align: center;
+            transform: scale(1);
+            transition: all .4s ease 0s;
+            @media #{$xs-layout} {
+                width: 80px;
+                height: 80px;
+                line-height: 77px;
+            }
+            svg {
+                path {
+                    stroke: $white;
+                    transition: all .3s ease 0s;
+                }
+            }
+            &:hover {
+                background-color: $white;
+                svg {
+                    path {
+                        stroke: $black;
+                    }
+                }
+            }
+        }
+        &:hover {
+            a {
+                transform: scale(.9);
+            }
+        }
+    }
+    h2 {
+        font-size: 32px;
+        font-weight: bold;
+        margin: 34px 0 0;
+        color: $white;
+        @media #{$xs-layout} {
+            font-size: 20px;
+        }
+    }
+}
+
+.brand-logo-wrap {
+	margin: 0 96px;
+	display: flex;
+    align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+    @media #{$xx-layout} {
+        margin: 0 0px;
+    }
+    @media #{$xl-layout} {
+        margin: 0 0px;
+    }
+    @media #{$lg-layout} {
+        margin: 0 0px;
+    }
+    @media #{$md-layout} {
+        margin: 0 0px;
+    }
+    @media #{$xs-layout} {
+        margin: 0 0px;
+        display: block;
+        text-align: center;
+    }
+    @media #{$sm-layout} {
+        display: flex;
+    }
+    .single-brand-logo {
+        overflow: hidden;
+        position: relative;
+        @media #{$xs-layout} {
+            margin: 0 0px 30px;
+        }
+        @media #{$sm-layout} {
+            width: 50%;
+        }
+        &.brand-logo-width-1 {
+            img {
+                width: 72px;
+                @media #{$md-layout} {
+                    width: 60px;
+                }
+                @media #{$xs-layout} {
+                    width: 60px;
+                }
+            }
+        }
+        &.brand-logo-width-2 {
+            img {
+                width: 224px;
+                @media #{$lg-layout} {
+                    width: 160px;
+                }
+                @media #{$md-layout} {
+                    width: 140px;
+                }
+                @media #{$xs-layout} {
+                    width: 140px;
+                }
+            }
+        }
+        &.brand-logo-width-3 {
+            img {
+                width: 361px;
+                @media #{$lg-layout} {
+                    width: 260px;
+                }
+                @media #{$md-layout} {
+                    width: 200px;
+                }
+                @media #{$xs-layout} {
+                    width: 200px;
+                }
+            }
+        }
+        &.brand-logo-width-4 {
+            img {
+                width: 243px;
+                @media #{$lg-layout} {
+                    width: 200px;
+                }
+                @media #{$md-layout} {
+                    width: 170px;
+                }
+                @media #{$xs-layout} {
+                    width: 170px;
+                }
+            }
+        }
+        img {
+            transform: scale(1);
+            transition: all .4s ease 0s;
+            &.brand-logo-white {
+                position: absolute;
+                top: 0;
+                left: 0;
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+        &:hover {
+            img {
+                transform: scale(.9);
+            }
+        }
+    }
+}
+
+@media #{$md-layout} {
+    .skill-area {
+        &.pb-215 {
+            padding-bottom: 95px;
+        }
+        &.pt-110 {
+            padding-top: 55px;
+        }
+    }
+    .talent-photography-area {
+        &.pb-215 {
+            padding-bottom: 100px;
+        }
+    }
+    .brand-logo-area {
+        &.pt-110 {
+            padding-top: 100px;
+        }
+        &.pb-135 {
+            padding-bottom: 100px;
+        }
+    }
+}
+
+@media #{$xs-layout} {
+    .skill-area {
+        &.pb-215 {
+            padding-bottom: 65px;
+        }
+        &.pt-110 {
+            padding-top: 25px;
+        }
+    }
+    .talent-photography-area {
+        &.pb-215 {
+            padding-bottom: 70px;
+        }
+    }
+    .brand-logo-area {
+        &.pt-110 {
+            padding-top: 70px;
+        }
+        &.pb-135 {
+            padding-bottom: 40px;
+        }
+    }
+}
+
+
+
+
+
+

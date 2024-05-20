@@ -1,0 +1,102 @@
+/*----------------------------------------
+  07. Breadcrumb style
+----------------------------------------*/
+
+.breadcrumb-padding-1 {
+    padding: 248px 0 80px;
+    @media #{$lg-layout} {
+        padding: 200px 0 80px;
+    }
+    @media #{$md-layout} {
+        padding: 140px 0 80px;
+    }
+    @media #{$xs-layout} {
+        padding: 140px 0 40px;
+    }
+}
+
+.breadcrumb-padding-2 {
+    padding: 248px 0 138px;
+    @media #{$lg-layout} {
+        padding: 170px 0 80px;
+    }
+    @media #{$md-layout} {
+        padding: 140px 0 80px;
+    }
+    @media #{$xs-layout} {
+        padding: 140px 0 40px;
+    }
+}
+
+.breadcrumb-padding-3 {
+    padding: 324px 0 123px;
+    @media #{$xx-layout} {
+        padding: 248px 0 80px;
+    }
+    @media #{$xl-layout} {
+        padding: 248px 0 80px;
+    }
+    @media #{$lg-layout} {
+        padding: 200px 0 80px;
+    }
+    @media #{$md-layout} {
+        padding: 140px 0 80px;
+    }
+    @media #{$xs-layout} {
+        padding: 140px 0 40px;
+    }
+}
+
+.breadcrumb-padding-4 {
+    padding: 324px 0 95px;
+    @media #{$xx-layout} {
+        padding: 248px 0 80px;
+    }
+    @media #{$xl-layout} {
+        padding: 248px 0 80px;
+    }
+    @media #{$lg-layout} {
+        padding: 200px 0 80px;
+    }
+    @media #{$md-layout} {
+        padding: 140px 0 80px;
+    }
+    @media #{$xs-layout} {
+        padding: 140px 0 40px;
+    }
+}
+
+.breadcrumb-content {
+    h1 {
+        font-size: 64px;
+        margin: 0 0 9px;
+        @media #{$lg-layout} {
+            font-size: 55px;
+        }
+        @media #{$md-layout} {
+            font-size: 45px;
+        }
+        @media #{$xs-layout} {
+            font-size: 35px;
+        }
+    }
+    p {
+        color: #9B9B9B;
+        width: 65%;
+        margin: 0 auto;
+        @media #{$lg-layout} {
+            width: 78%;
+        }
+        @media #{$md-layout} {
+            width: 100%;
+        }
+        @media #{$xs-layout} {
+            width: 100%;
+            font-size: 16px;
+        }
+    }
+}
+
+
+
+

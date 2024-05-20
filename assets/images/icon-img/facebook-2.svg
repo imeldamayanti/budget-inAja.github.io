@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="12px" height="21px" viewBox="0 0 12 21" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <desc>Created with Lunacy</desc>
+  <defs>
+    <path d="M3.19583 20L3.19583 11.0547L0 11.0547L0 7.5L3.19583 7.5L3.19583 4.69922C3.19583 1.65625 5.17917 0 8.075 0C9.4625 0 10.6542 0.0976563 11 0.140625L11 3.32031L8.99167 3.32031C7.41667 3.32031 7.1125 4.02344 7.1125 5.05078L7.1125 7.5L10.6667 7.5L10.1792 11.0547L7.1125 11.0547L7.1125 20" transform="translate(0.5 0.5)" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <path d="M3.19583 20L3.19583 11.0547L0 11.0547L0 7.5L3.19583 7.5L3.19583 4.69922C3.19583 1.65625 5.17917 0 8.075 0C9.4625 0 10.6542 0.0976563 11 0.140625L11 3.32031L8.99167 3.32031C7.41667 3.32031 7.1125 4.02344 7.1125 5.05078L7.1125 7.5L10.6667 7.5L10.1792 11.0547L7.1125 11.0547L7.1125 20" transform="translate(0.5 0.5)" id="facebook-f" fill="none" stroke="#C6C6C6" stroke-width="1" />
+</svg>

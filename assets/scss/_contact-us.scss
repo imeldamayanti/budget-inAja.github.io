@@ -1,0 +1,130 @@
+/*----------------------------------------
+  08. Contact us style
+----------------------------------------*/
+
+.map {
+    margin: 0 0 95px;
+    @media #{$md-layout} {
+        margin: 0 0 70px;
+    }
+    @media #{$xs-layout} {
+        margin: 0 0 40px;
+    }
+    iframe {
+        height: 420px;
+        width: 100%;
+        @media #{$md-layout} {
+            height: 300px;
+        }
+        @media #{$xs-layout} {
+            height: 300px;
+        }
+    }
+}
+
+.contact-form-style {
+    margin: 0 69px;
+    @media #{$xl-layout} {
+        margin: 0 0px;
+    }
+    @media #{$lg-layout} {
+        margin: 0 0px;
+    }
+    @media #{$md-layout} {
+        margin: 0 0px;
+    }
+    @media #{$xs-layout} {
+        margin: 0 0px;
+    }
+    form {
+        input , textarea {
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid #2F2F2F;
+            color: #2F2F2F;
+            font-size: 18px;
+            font-family: $proximanova;
+            height: 58px;
+            padding: 0 0;
+            margin: 0 0 36px;
+            letter-spacing: -0.24px;
+            background-color: transparent;
+            &::-moz-input-placeholder {
+                color: #2F2F2F;
+                opacity: 1;
+            }
+            &::-webkit-input-placeholder {
+                color: #2F2F2F;
+                opacity: 1;
+            }
+            @media #{$xs-layout} {
+                margin: 0 0 20px;
+            }
+        }
+        textarea {
+            height: 140px;
+            @media #{$xs-layout} {
+                height: 100px;
+            }
+        }
+        select {
+            cursor: pointer;
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid #2F2F2F;
+            color: #2F2F2F;
+            font-size: 18px;
+            font-family: $proximanova;
+            height: 58px;
+            padding: 0 0;
+            margin: 0 0 36px;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            background: rgba(0, 0, 0, 0) url("../../assets/images/icon-img/arrow-down.png") no-repeat scroll right 0px center;
+        }
+        button {
+            &.submit {
+                color: #434343;
+                font-size: 20px;
+                margin: 12px 0 0;
+                padding: 19px 40px 17px;
+                background-color: transparent;
+                border: 1px solid #979797;
+                font-family: $proximanova;
+                transition: all .3s ease 0s;
+                @media #{$xs-layout} {
+                    font-size: 18px;
+                    padding: 12px 30px 13px;
+                }
+                &:hover {
+                    background-color: #434343;
+                    border: 1px solid #434343;
+                    color: $white;
+                }
+            }
+        }
+    }
+    p {
+        margin: 10px 0 0;
+    }
+}
+
+@media #{$md-layout} {
+    .contact-us-area {
+        &.pb-120 {
+            padding-bottom: 90px;
+        }
+    }
+}
+
+@media #{$xs-layout} {
+    .contact-us-area {
+        &.pb-120 {
+            padding-bottom: 60px;
+        }
+    }
+}
+
+
+
+

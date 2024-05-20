@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="21px" height="21px" viewBox="0 0 21 21" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <desc>Created with Lunacy</desc>
+  <g id="zoom" transform="translate(0.5 0.5)">
+    <path d="M6.344 6.344L0 0" transform="translate(13.65601 13.65601)" id="Path" fill="none" stroke="#1E1E1E" stroke-width="1" stroke-linecap="square" />
+    <path d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16Z" id="Oval" fill="none" stroke="#1E1E1E" stroke-width="1" stroke-linecap="square" />
+  </g>
+</svg>

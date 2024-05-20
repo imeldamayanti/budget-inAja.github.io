@@ -1,0 +1,65 @@
+/*----------------------------------------
+  06. Section title style
+----------------------------------------*/
+
+.section-title-1 {
+    span {
+        font-size: 16px;
+        letter-spacing: 16.67px;
+        text-transform: uppercase;
+        font-family: $proximanova;
+        display: block;
+    }
+    h2 {
+        font-size: 54px;
+        margin: 23px 0 0;
+        @media #{$lg-layout} {
+            font-size: 45px;
+        }
+        @media #{$md-layout} {
+            font-size: 35px;
+        }
+        @media #{$xs-layout} {
+            font-size: 28px;
+            margin: 15px 0 0;
+        }
+    }
+    @media #{$lg-layout} {
+        &.mb-135 {
+            margin-bottom: 80px;
+        }
+    }
+    @media #{$md-layout} {
+        &.mb-135 {
+            margin-bottom: 60px;
+        }
+    }
+    @media #{$xs-layout} {
+        &.mb-135 {
+            margin-bottom: 35px;
+        }
+    }
+}
+
+.section-title-2 {
+    margin: 0 0 113px;
+    @media #{$lg-layout} {
+        margin: 0 0 50px;
+    }
+    @media #{$md-layout} {
+        margin: 0 0 50px;
+    }
+    @media #{$xs-layout} {
+        margin: 0 0 30px;
+    }
+    h2 {
+        font-size: 34px;
+        margin: 0;
+        @media #{$xs-layout} {
+            font-size: 30px;
+        }
+    }
+}
+
+
+
