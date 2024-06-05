@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"KnapSack/models/makananmodel"
 	"strconv"
-	"fmt"
+	// "fmt"
 	// "os"
 )
 var tmpl *template.Template

@@ -29,7 +29,7 @@ func main() {
 	// http.HandleFunc("/", homeHandler)
 
 	http.HandleFunc("/", homecontroller.Splash)
-	http.HandleFunc("/generate", homecontroller.Generate)
+	// http.HandleFunc("/generate", homecontroller.Generate)
 	http.HandleFunc("/generated-data", homecontroller.ShowGenerated)
 	http.HandleFunc("/data", makanancontroller.Index)
 	http.HandleFunc("/about", aboutcontroller.Index)
