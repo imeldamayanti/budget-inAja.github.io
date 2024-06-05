@@ -3,11 +3,11 @@ package main
 import (
 	"log"
 	"net/http"
-	"tubes_sa/config"
-	"tubes_sa/controllers/aboutcontroller"
-	"tubes_sa/controllers/homecontroller"
-	"tubes_sa/controllers/makanancontroller"
-	"tubes_sa/models/makananmodel"
+	"KnapSack/config"
+	"KnapSack/controllers/aboutcontroller"
+	"KnapSack/controllers/homecontroller"
+	"KnapSack/controllers/makanancontroller"
+	"KnapSack/models/makananmodel"
 )
 
 // var tmpl *template.Template
@@ -29,6 +29,8 @@ func main() {
 	// http.HandleFunc("/", homeHandler)
 
 	http.HandleFunc("/", homecontroller.Splash)
+	http.HandleFunc("/generate", homecontroller.Generate)
+	http.HandleFunc("/generated-data", homecontroller.ShowGenerated)
 	http.HandleFunc("/data", makanancontroller.Index)
 	http.HandleFunc("/about", aboutcontroller.Index)
 

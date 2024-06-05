@@ -3,7 +3,7 @@ package makanancontroller
 import (
 	"net/http"
 	"text/template"
-	"tubes_sa/models/makananmodel"
+	"KnapSack/models/makananmodel"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {

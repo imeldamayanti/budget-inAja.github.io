@@ -1,45 +1,16 @@
-package makananmodel
+package services
 
 import (
-	"KnapSack/config"
 	"KnapSack/entities"
-	"fmt"
-	// "time"
-	// "KnapSack/services"
-	// "os"
 )
 
+// Struktur untuk menyimpan node dalam pohon ruang status
 type Node struct {
 	level    int
 	rating   float64
 	bound    float64
 	harga    float64
 	included []bool
-}
-
-func GetAll() []entities.Makanan {
-	rows, err := config.DB.Query(`SELECT * FROM makanan`)
-	if err != nil {
-		panic(err)
-	}
-
-	defer rows.Close()
-
-	var dt_makanan []entities.Makanan
-
-	for rows.Next() {
-		var makanan entities.Makanan
-		if err := rows.Scan(&makanan.ID, &makanan.Nama, &makanan.Harga, &makanan.Rating, &makanan.Jarak, &makanan.Lokasi); err != nil {
-			panic(err)
-		}
-
-		// fmt.Printf("ID: %d, Nama: %s, Harga: %.2f, Rating: %.2f, Jarak: %.2f, Lokasi: %s\n",
-		// makanan.ID, makanan.Nama, makanan.Harga, makanan.Rating, makanan.Jarak, makanan.Lokasi)
-		// fmt.Print(dt_makanan)
-		dt_makanan = append(dt_makanan, makanan)
-	}
-
-	return dt_makanan
 }
 
 // Mengurutkan data berdasarkan density
@@ -180,27 +151,4 @@ func branchAndBound(foods []entities.Makanan, budget float64) ([]entities.Makana
 	}
 
 	return result, totalRating, totalHarga
-}
-
-func GenerateData(mealsPerDay int, budget float64) []entities.Makanan {
-	rows, err := config.DB.Query(`SELECT * FROM makanan`)
-	if err != nil {
-		panic(err)
-	}
-	defer rows.Close()
-
-	var foods []entities.Makanan
-	for rows.Next() {
-		var food entities.Makanan
-		err := rows.Scan(&food.ID, &food.Nama, &food.Harga, &food.Rating, &food.Jarak, &food.Lokasi)
-		if err != nil {
-			fmt.Println("Error scanning row:", err)
-			continue 
-		}
-		foods = append(foods, food)
-	}
-
-	bestCombination, _, _ := branchAndBound(foods, budget)
-
-	return bestCombination
 }

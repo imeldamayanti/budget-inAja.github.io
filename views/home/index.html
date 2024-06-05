@@ -91,20 +91,20 @@
                     <p data-aos="fade-up" data-aos-delay="50" class="mb-3">Selamat datang di Budget-inAja, kami akan membantu kamu dengan memberikan rekomendasi makanan selama satu minggu, mempertimbangan keuangan dan jumlah harian makanmu!</p>
                     
                     <div class="form-grup mt-0">
-                        <form id="contact-form" action="https://htmlmail.hasthemes.com/tasnim/photography.php" method="post">
+                        <form id="meal-form">
                             <div class="row mb-3" data-aos="fade-up" data-aos-delay="50" >
                                 <div class=" col-2 ">
                                     <label for="">Frekuensi Makan/Hari</label>
                                     <br>
-                                    <input name="first_name" type="text" placeholder="Maks.5">
+                                    <input name="frequency" id="frequency" type="number" placeholder="Maks.5" required>
                                 </div>
                                 <div class="col-2 " >    
                                     <label for="" >Budget Seminggu</label>
                                     <br>
-                                    <input name="website" type="text" placeholder="Cont. 250">
+                                    <input name="budget" id="budget" type="number" placeholder="Cont. 250" required>
                                 </div>
                             </div>
-                            <a data-aos="fade-up" data-aos-delay="50" a href="#" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Generate</a>  
+                            <button data-aos="fade-up" data-aos-delay="50" type="submit" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Generate</button>  
                         </form>                
                     </div>
                 </div>
@@ -182,5 +182,37 @@
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
 </body>
+
+<script>
+    const form = document.getElementById('meal-form');
+    
+    form.addEventListener('submit', handleFormSubmit);
+
+    function handleFormSubmit(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const frequency = document.getElementById('frequency').value;
+    const budget = document.getElementById('budget').value;
+
+    let queryString = '';
+    if (frequency) {
+        queryString += `frequency=${frequency}&`;
+    } else {
+        queryString += `frequency=1&`;
+    }
+
+    if (budget) {
+        queryString += `budget=${budget}&`;
+    } else {
+        queryString += `budget=1&`;
+    }
+
+    queryString = queryString.slice(0, -1); // Remove trailing "&"
+
+    const newURL = `/generated-data?${queryString}`;
+
+    window.open(newURL, '_blank'); // Open new tab with URL and target="_blank"
+    }
+</script>
 
 </html>
