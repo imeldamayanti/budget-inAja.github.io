@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Budget-inAja</title>
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Optico is an elegant design, 100% responsive Bootstrap 5 template. It is best for optico websites and marketing companies.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png">
+
+    <!-- All CSS is here
+	============================================ -->
+    <link rel="stylesheet" href="assets/css/vendor/proximanova.css" />
+    <link rel="stylesheet" href="assets/css/vendor/line-awesome.min.css" />
+    <link rel="stylesheet" href="assets/css/plugins/animate.css" />
+    <link rel="stylesheet" href="assets/css/plugins/aos.css" />
+    <link rel="stylesheet" href="assets/css/plugins/magnific-popup.css" />
+    <link rel="stylesheet" href="assets/css/plugins/slinky.min.css" />
+    <link rel="stylesheet" href="assets/css/plugins/swiper.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body class="body-dark-mode-wrap">
+    <div class="main-wrapper">
+        <header class="header-area header-area-padding-1 section-padding-lr-1 transparent-bar sticky-bar bg-white sticky-white-bg">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-6 col-12 col-sm-6">
+                        <div class="logo logo-center-small">
+                            <a class="default-logo" href="index.html"><img src="assets/images/logo/logo.png" alt="logo"></a>
+                            <a class="white-logo" href="index.html"><img src="assets/images/logo/logo-white.png" alt="logo"></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 d-none d-lg-block">
+                        <div class="main-menu text-center">
+                            <nav>
+                                <ul>
+                                    <li ><a href="/">Beranda</a></li>
+                                    <li class="active"><a href="home.html">Data</a></li>
+                                    <li><a href="contact-us.html">Tentang</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12 col-sm-6">
+                        <div class="header-action">
+                            <div class="search-wrap">
+                                <a class="search-active" href="#">
+                                    <img class="injectable" src="assets/images/icon-img/search.svg" alt="">
+                                </a>
+                            </div>
+                            <div class="light-dark-mode-wrap">
+                                <span class="dark-mode">Dark mode</span>
+                                <span class="light-mode">Light mode</span>
+                                <div class="light-dark-btn">
+
+                                </div>
+                            </div>
+                            <div class="offcanvas-wrap">
+                                <a class="header-aside-button" href="#">
+                                    <span class="offcanvas-width-1"></span>
+                                    <span class="offcanvas-width-2"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="hero-area hero-section-padding section-padding-lr-1">
+          <div class=" container-fluid">
+              <table class="table table-bordered text-center" data-aos="fade-up" data-aos-delay="200">
+                  <thead>
+                      <tr>
+                          <th>Nama</th>
+                          <th>Harga</th>
+                          <th>Rating</th>
+                          <th>Jarak</th>
+                          <th>Lokasi</th>
+                      </tr>
+                      
+                    </thead>
+                  <tbody>
+                      {{range .dt_makanan}} 
+                      <tr>
+                          <td class="align-items" style="text-align: left;">{{.Nama}}</td>
+                          <td>{{.Harga}}</td>
+                          <td>{{.Rating}}</td>
+                          <td>{{.Jarak}}</td>
+                          <td><a href="{{.Lokasi}}" target="_blank"><img src="assets/images/logo/loc.png" alt="" srcset="" style="width: 15px; height: auto;"></a></td>
+                      </tr>
+                      {{end}} 
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      
+        
+       
+    </div>
+    <!-- Global Vendor, plugins JS -->
+    <script src="assets/js/vendor/modernizr-3.11.2.min.js"></script>
+    <script src="assets/js/vendor/jquery-3.5.1.min.js"></script>
+    <script src="assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+    <script src="assets/js/vendor/popper.min.js"></script>
+    <script src="assets/js/vendor/bootstrap.min.js"></script>
+    <script src="assets/js/plugins/svg-inject.min.js"></script>
+    <script src="assets/js/plugins/wow.js"></script>
+    <script src="assets/js/plugins/scrollup.js"></script>
+    <script src="assets/js/plugins/aos.js"></script>
+    <script src="assets/js/plugins/magnific-popup.js"></script>
+    <script src="assets/js/plugins/mouse-parallax.js"></script>
+    <script src="assets/js/plugins/slinky.min.js"></script>
+    <script src="assets/js/plugins/swiper.min.js"></script>
+    <script src="assets/js/plugins/ajax-mail.js"></script>
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

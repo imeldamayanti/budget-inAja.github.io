@@ -20,9 +20,5 @@ func Splash(w http.ResponseWriter, r *http.Request) {
 }
 
 func Welcome(w http.ResponseWriter, r *http.Request) {
-	temp, err := template.ParseFiles("views/home/home.html")
-	if err != nil{
-		panic(err)
-	}
-	temp.Execute(w,nil)
+	tmpl.ExecuteTemplate(w, "home.html", nil)
 }
