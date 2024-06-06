@@ -1,13 +1,13 @@
 package main
 
 import (
-	"log"
-	"net/http"
 	"KnapSack/config"
 	"KnapSack/controllers/aboutcontroller"
 	"KnapSack/controllers/homecontroller"
 	"KnapSack/controllers/makanancontroller"
 	"KnapSack/models/makananmodel"
+	"log"
+	"net/http"
 )
 
 // var tmpl *template.Template
@@ -38,8 +38,3 @@ func main() {
 	log.Println("Server running on port 3001")
 	http.ListenAndServe("127.0.0.1:3001", nil)
 }
-
-// go mod init
-// go get -u "github.com/go-sql-driver/mysql"
-// go run .
-// minta tolong buat hubungin depan -> algoritmanya

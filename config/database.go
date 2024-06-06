@@ -12,13 +12,13 @@ var DB *sql.DB
 
 func ConnectDB(){
 	// parseTime error : unsupported scan
-	db, err := sql.Open("mysql", "root:@/products?parseTime=true")
+	db, err := sql.Open("mysql", "root:root@/products?parseTime=true")
 
 	if err != nil {
 		panic(err)
 	}
 
-	//db in nampung koneksi db kita, bisa diakses
+	// db in nampung koneksi db kita, bisa diakses
 	log.Println("Database Connected")
 	DB = db
 }

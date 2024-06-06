@@ -109,6 +109,7 @@ func bound(node Node, foods []entities.Makanan, budget float64, n_item int) floa
 		j++
 	}
 
+	// Menambah nilai bound untuk fractional item
 	if j < n_item {
 		ratingBound += (budget - totalWeight) * foods[j].Rating / foods[j].Harga
 	}
@@ -117,7 +118,7 @@ func bound(node Node, foods []entities.Makanan, budget float64, n_item int) floa
 }
 
 // Fungsi untuk algoritma Branch and Bound
-func branchAndBound(foods []entities.Makanan, budget float64) ([]entities.Makanan, float64, float64) {
+func branchAndBound(foods []entities.Makanan, budget float64) []entities.Makanan {
 	foods = MergeSort(foods)
 
 	n := len(foods)
@@ -169,17 +170,15 @@ func branchAndBound(foods []entities.Makanan, budget float64) ([]entities.Makana
 	}
 
 	var result []entities.Makanan
-	totalRating := 0.0
 	totalHarga := 0.0
 	for i := 0; i < n; i++ {
-		if bestItems[i] && totalHarga+foods[i].Harga <= budget {
+		if bestItems[i] {
 			result = append(result, foods[i])
-			totalRating += foods[i].Rating
 			totalHarga += foods[i].Harga
 		}
 	}
 
-	return result, totalRating, totalHarga
+	return result
 }
 
 func GenerateData(mealsPerDay int, budget float64) []entities.Makanan {
@@ -200,7 +199,7 @@ func GenerateData(mealsPerDay int, budget float64) []entities.Makanan {
 		foods = append(foods, food)
 	}
 
-	bestCombination, _, _ := branchAndBound(foods, budget)
+	bestCombination := branchAndBound(foods, budget)
 
 	return bestCombination
 }
