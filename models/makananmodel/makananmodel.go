@@ -222,6 +222,14 @@ func GenerateData(mealsPerDay int, budget float64) []entities.Jadwal {
 		foods = append(foods, food)
 	}
 
+	if mealsPerDay >= 5 {
+		mealsPerDay = 5
+	}
+
+	if budget >= 1000 {
+		budget = 1000
+	}
+
 	bestCombination := branchAndBound(foods, budget)
 
 	mealsPerWeek := mealsPerDay * 7
@@ -275,10 +283,6 @@ func GenerateData(mealsPerDay int, budget float64) []entities.Jadwal {
 			mealPlans = append(mealPlans, jadwal)
 		}
 
-	}
-
-	if totalSeluruhHarga <= budget {
-		mealPlans = make([]entities.Jadwal, 0)
 	}
 
 	return mealPlans
