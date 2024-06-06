@@ -181,7 +181,30 @@ func branchAndBound(foods []entities.Makanan, budget float64) []entities.Makanan
 	return result
 }
 
-func GenerateData(mealsPerDay int, budget float64) []entities.Makanan {
+func GetDayName(day int) string {
+	var dayString string
+
+	switch day {
+	case 1:
+		dayString = "SENIN"
+	case 2:
+		dayString = "SELASA"
+	case 3:
+		dayString = "RABU"
+	case 4:
+		dayString = "KAMIS"
+	case 5:
+		dayString = "JUMAT"
+	case 6:
+		dayString = "SABTU"
+	case 7:
+		dayString = "MINGGU"
+	}
+
+	return dayString
+}
+
+func GenerateData(mealsPerDay int, budget float64) []entities.Jadwal {
 	rows, err := config.DB.Query(`SELECT * FROM makanan`)
 	if err != nil {
 		panic(err)
@@ -194,12 +217,69 @@ func GenerateData(mealsPerDay int, budget float64) []entities.Makanan {
 		err := rows.Scan(&food.ID, &food.Nama, &food.Harga, &food.Rating, &food.Jarak, &food.Lokasi)
 		if err != nil {
 			fmt.Println("Error scanning row:", err)
-			continue 
+			continue
 		}
 		foods = append(foods, food)
 	}
 
 	bestCombination := branchAndBound(foods, budget)
 
-	return bestCombination
+	mealsPerWeek := mealsPerDay * 7
+
+	// Sum total
+	// totalHarga := 0.0
+	// maxRating := 0.0
+	// if len(bestCombination) != 0 {
+	// 	for i := 0; i < mealsPerWeek && totalHarga+bestCombination[i].Harga <= budget; i++ {
+	// 		totalHarga += bestCombination[i].Harga
+	// 		maxRating += bestCombination[i].Rating
+	// 	}
+	// }
+
+	// Filter combination per-day
+	var totalSeluruhHarga float64
+	mealPlans := make([]entities.Jadwal, 0)
+	if len(bestCombination) > mealsPerWeek {
+
+		// Loop daily
+		for day := 1; day <= 7; day++ {
+			// Create empty slice jadwal
+			jadwal := entities.Jadwal{
+				Hari:       GetDayName(day),
+				Menu:       make([]entities.Makanan, 0),
+				TotalHarga: 0,
+			}
+
+			// Loop per-daily meal
+			for meal := 0; meal < mealsPerDay; meal++ {
+				// randomize meal selection
+				index := day*mealsPerDay + meal
+
+				// Append meal if not out of index bond
+				if index < len(bestCombination) && totalSeluruhHarga <= budget {
+					jadwal.Menu = append(jadwal.Menu, bestCombination[index])
+					jadwal.TotalHarga += bestCombination[index].Harga
+					totalSeluruhHarga += bestCombination[index].Harga
+				} else {
+					jadwal.Menu = append(jadwal.Menu, entities.Makanan{
+						ID:     0,
+						Nama:   "-",
+						Harga:  0,
+						Rating: 0,
+						Jarak:  0,
+						Lokasi: "",
+					})
+				}
+			}
+
+			mealPlans = append(mealPlans, jadwal)
+		}
+
+	}
+
+	if totalSeluruhHarga <= budget {
+		mealPlans = make([]entities.Jadwal, 0)
+	}
+
+	return mealPlans
 }

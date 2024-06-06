@@ -5,7 +5,8 @@ import (
 	"KnapSack/controllers/aboutcontroller"
 	"KnapSack/controllers/homecontroller"
 	"KnapSack/controllers/makanancontroller"
-	"KnapSack/models/makananmodel"
+
+	// "KnapSack/models/makananmodel"
 	"log"
 	"net/http"
 )
@@ -22,7 +23,7 @@ import (
 
 func main() {
 	config.ConnectDB()
-	makananmodel.GetAll()
+	// makananmodel.GetAll()
 
 	fs := http.FileServer(http.Dir("assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets", fs))
@@ -33,7 +34,6 @@ func main() {
 	http.HandleFunc("/generated-data", homecontroller.ShowGenerated)
 	http.HandleFunc("/data", makanancontroller.Index)
 	http.HandleFunc("/about", aboutcontroller.Index)
-
 
 	log.Println("Server running on port 3001")
 	http.ListenAndServe("127.0.0.1:3001", nil)

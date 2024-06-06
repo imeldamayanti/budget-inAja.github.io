@@ -1,16 +1,17 @@
 package homecontroller
 
 import (
+	"KnapSack/models/makananmodel"
 	"html/template"
 	"net/http"
-	"KnapSack/models/makananmodel"
 	"strconv"
 	// "fmt"
 	// "os"
 )
+
 var tmpl *template.Template
 
-func init(){
+func init() {
 	tmpl = template.Must(template.ParseGlob("views/home/*.html"))
 }
 
@@ -47,7 +48,7 @@ func ShowGenerated(w http.ResponseWriter, r *http.Request) {
 		"dt_makanan": dt_makanan,
 	}
 
-	tmpl.ExecuteTemplate(w, "data.html", data)
+	tmpl.ExecuteTemplate(w, "generatedData.html", data)
 }
 
 func Welcome(w http.ResponseWriter, r *http.Request) {

@@ -1,5 +1,11 @@
 package entities
 
+type Jadwal struct {
+	Hari       string
+	Menu       []Makanan
+	TotalHarga float64
+}
+
 type Makanan struct {
 	ID     int
 	Nama   string

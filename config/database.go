@@ -10,7 +10,7 @@ import (
 
 var DB *sql.DB
 
-func ConnectDB(){
+func ConnectDB() {
 	// parseTime error : unsupported scan
 	db, err := sql.Open("mysql", "root:root@/products?parseTime=true")
 
