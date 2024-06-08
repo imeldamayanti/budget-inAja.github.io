@@ -3,7 +3,9 @@ package makananmodel
 import (
 	"KnapSack/config"
 	"KnapSack/entities"
+	"container/heap"
 	"fmt"
+	"sort"
 	// "time"
 	// "KnapSack/services"
 	// "os"
@@ -12,9 +14,10 @@ import (
 type Node struct {
 	level    int
 	rating   float64
+	price    float64
 	bound    float64
-	harga    float64
 	included []bool
+	index    int // index diperlukan oleh heap interface
 }
 
 func GetAll() []entities.Makanan {
@@ -42,143 +45,157 @@ func GetAll() []entities.Makanan {
 	return dt_makanan
 }
 
-// Mengurutkan data berdasarkan density
-func MergeSort(foods []entities.Makanan) []entities.Makanan {
-	if len(foods) > 1 {
-		mid := len(foods) / 2
+// PriorityQueue mengimplementasikan heap.Interface dan menyimpan Nodes
+type PriorityQueue []*Node
 
-		// Allocate memory for the left and right subfoodsays
-		L := make([]entities.Makanan, mid)
-		R := make([]entities.Makanan, len(foods)-mid)
+func (pq PriorityQueue) Len() int { return len(pq) }
 
-		// Copy data to the left and right subfoodsays
-		for i := 0; i < mid; i++ {
-			L[i] = foods[i]
-		}
-		for i := mid; i < len(foods); i++ {
-			R[i-mid] = foods[i]
-		}
+func (pq PriorityQueue) Less(i, j int) bool {
+	return pq[i].bound > pq[j].bound // Menggunakan bound sebagai prioritas
+}
 
-		MergeSort(L)
-		MergeSort(R)
+func (pq PriorityQueue) Swap(i, j int) {
+	pq[i], pq[j] = pq[j], pq[i]
+	pq[i].index = i
+	pq[j].index = j
+}
 
-		i, j, k := 0, 0, 0
+func (pq *PriorityQueue) Push(x interface{}) {
+	n := len(*pq)
+	node := x.(*Node)
+	node.index = n
+	*pq = append(*pq, node)
+}
 
-		// Merge the two halves
-		for i < len(L) && j < len(R) {
-			if (L[i].Rating / L[i].Harga) >= (R[j].Rating / R[i].Harga) {
-				foods[k] = L[i]
-				i++
-			} else {
-				foods[k] = R[j]
-				j++
-			}
-			k++
-		}
-
-		// Copy any remaining elements of L[], if any
-		for i < len(L) {
-			foods[k] = L[i]
-			i++
-			k++
-		}
-
-		// Copy any remaining elements of R[], if any
-		for j < len(R) {
-			foods[k] = R[j]
-			j++
-			k++
-		}
-	}
-	return foods
+func (pq *PriorityQueue) Pop() interface{} {
+	old := *pq
+	n := len(old)
+	node := old[n-1]
+	old[n-1] = nil  // avoid memory leak
+	node.index = -1 // for safety
+	*pq = old[0 : n-1]
+	return node
 }
 
 // Fungsi untuk menghitung bound dari node
-func bound(node Node, foods []entities.Makanan, budget float64, n_item int) float64 {
-	if node.harga >= budget {
+func getBound(node *Node, n int, budget float64, foods []entities.Makanan) float64 {
+	if node.price >= budget {
 		return 0
 	}
 
 	ratingBound := node.rating
 	j := node.level + 1
-	totalWeight := node.harga
+	totalPrice := node.price
 
-	for j < n_item && totalWeight+foods[j].Harga <= budget {
-		totalWeight += foods[j].Harga
+	for j < n && totalPrice+foods[j].Harga <= budget {
+		totalPrice += foods[j].Harga
 		ratingBound += foods[j].Rating
 		j++
 	}
 
-	// Menambah nilai bound untuk fractional item
-	if j < n_item {
-		ratingBound += (budget - totalWeight) * foods[j].Rating / foods[j].Harga
+	if j < n {
+		ratingBound += (budget - totalPrice) * foods[j].Rating / foods[j].Harga
 	}
 
 	return ratingBound
 }
 
 // Fungsi untuk algoritma Branch and Bound
-func branchAndBound(foods []entities.Makanan, budget float64) []entities.Makanan {
-	foods = MergeSort(foods)
+func branchAndBound(foods []entities.Makanan, budget float64, mealsPerWeek int) ([]int, int) {
+	// Mengurutkan foods berdasarkan densitas (rating/price)
+	sort.Slice(foods, func(i, j int) bool {
+		return foods[i].Rating/foods[i].Harga > foods[j].Rating/foods[j].Harga
+	})
 
 	n := len(foods)
-	var queue []Node
-	u := Node{-1, 0.0, 0.0, 0.0, make([]bool, n)} // root
-	v := Node{0, 0.0, 0.0, 0.0, make([]bool, n)}
+	pq := make(PriorityQueue, 0)
+	heap.Init(&pq)
 
+	u := &Node{level: -1, rating: 0, price: 0, included: make([]bool, n)}
 	maxRating := 0.0
-	bestItems := make([]bool, n)
+	var bestFoods []int
+	nodeCount := 0
 
-	u.bound = bound(u, foods, budget, n)
-	queue = append(queue, u)
+	u.bound = getBound(u, n, budget, foods)
+	heap.Push(&pq, u)
+	nodeCount++
 
-	for len(queue) > 0 {
-		u = queue[0]
-		queue = queue[1:]
+	for pq.Len() > 0 {
+		u = heap.Pop(&pq).(*Node)
+		if u.bound > maxRating {
+			if u.level+1 < n { // Ensure we don't go out of bounds
+				// Menambahkan item ke dalam node
+				v := &Node{level: u.level + 1, rating: u.rating + foods[u.level+1].Rating, price: u.price + foods[u.level+1].Harga, included: make([]bool, n)}
+				copy(v.included, u.included)
+				v.included[u.level+1] = true
+				nodeCount++
+				if v.price <= budget && v.rating > maxRating && countTrue(v.included) == mealsPerWeek {
+					maxRating = v.rating
+					bestFoods = getIncludedItems(v.included)
+				}
 
-		if u.level == -1 {
-			v.level = 0
-		} else if u.level == n-1 {
-			continue
-		} else {
-			v.level = u.level + 1
-		}
+				v.bound = getBound(v, n, budget, foods)
+				if v.bound > maxRating {
+					heap.Push(&pq, v)
+				}
 
-		v.harga = u.harga + foods[v.level].Harga
-		v.rating = u.rating + foods[v.level].Rating
-		v.included = make([]bool, n)
-		copy(v.included, u.included)
-		v.included[v.level] = true
-
-		if v.harga <= budget && v.rating > maxRating {
-			maxRating = v.rating
-			bestItems = make([]bool, n)
-			copy(bestItems, v.included)
-		}
-
-		v.bound = bound(v, foods, budget, n)
-		if v.bound > maxRating {
-			queue = append(queue, v)
-		}
-
-		v = Node{u.level + 1, u.rating, u.harga, 0.0, make([]bool, n)}
-		copy(v.included, u.included)
-		v.bound = bound(v, foods, budget, n)
-		if v.bound > maxRating {
-			queue = append(queue, v)
+				// Tidak menambahkan item ke dalam node
+				v2 := &Node{level: u.level + 1, rating: u.rating, price: u.price, included: make([]bool, n)}
+				copy(v2.included, u.included)
+				nodeCount++
+				v2.bound = getBound(v2, n, budget, foods)
+				if v2.bound > maxRating {
+					heap.Push(&pq, v2)
+				}
+			}
 		}
 	}
 
-	var result []entities.Makanan
-	totalHarga := 0.0
-	for i := 0; i < n; i++ {
-		if bestItems[i] {
-			result = append(result, foods[i])
-			totalHarga += foods[i].Harga
+	return bestFoods, nodeCount
+}
+
+func countTrue(arr []bool) int {
+	count := 0
+	for _, v := range arr {
+		if v {
+			count++
+		}
+	}
+	return count
+}
+
+func getIncludedItems(included []bool) []int {
+	var items []int
+	for i, v := range included {
+		if v {
+			items = append(items, i)
+		}
+	}
+	return items
+}
+
+// Fungsi untuk menemukan kombinasi makanan optimal
+func findOptimalFoodCombination(foods []entities.Makanan, budget float64, mealsPerDay int) ([]int, int) {
+	mealsPerWeek := mealsPerDay * 7
+	optimalFoods, nodeCount := branchAndBound(foods, budget, mealsPerWeek)
+	if len(optimalFoods) < mealsPerWeek {
+		return nil, nodeCount
+	}
+	return optimalFoods, nodeCount
+}
+
+// Fungsi untuk memetakan makanan per hari
+func mapFoodsPerDay(foods []entities.Makanan, foodIndices []int, mealsPerDay int) map[string][]entities.Makanan {
+	weeklyMenu := make(map[string][]entities.Makanan)
+	days := []string{"Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"}
+
+	for i := 0; i < 7; i++ {
+		for j := 0; j < mealsPerDay; j++ {
+			weeklyMenu[days[i]] = append(weeklyMenu[days[i]], foods[foodIndices[i*mealsPerDay+j]])
 		}
 	}
 
-	return result
+	return weeklyMenu
 }
 
 func GetDayName(day int) string {
@@ -230,60 +247,37 @@ func GenerateData(mealsPerDay int, budget float64) []entities.Jadwal {
 		budget = 1000
 	}
 
-	bestCombination := branchAndBound(foods, budget)
-
-	mealsPerWeek := mealsPerDay * 7
-
-	// Sum total
-	// totalHarga := 0.0
-	// maxRating := 0.0
-	// if len(bestCombination) != 0 {
-	// 	for i := 0; i < mealsPerWeek && totalHarga+bestCombination[i].Harga <= budget; i++ {
-	// 		totalHarga += bestCombination[i].Harga
-	// 		maxRating += bestCombination[i].Rating
-	// 	}
-	// }
+	// Get meals recommendation
+	optimalCombination, _ := findOptimalFoodCombination(foods, budget, mealsPerDay)
 
 	// Filter combination per-day
 	var totalSeluruhHarga float64
 	mealPlans := make([]entities.Jadwal, 0)
-	if len(bestCombination) > mealsPerWeek {
+	if optimalCombination != nil {
+		weeklyMenu := mapFoodsPerDay(foods, optimalCombination, mealsPerDay)
 
-		// Loop daily
-		for day := 1; day <= 7; day++ {
+		// Order of days
+		days := []string{"Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"}
+
+		for _, day := range days {
+			meals := weeklyMenu[day]
 			// Create empty slice jadwal
 			jadwal := entities.Jadwal{
-				Hari:       GetDayName(day),
+				Hari:       day,
 				Menu:       make([]entities.Makanan, 0),
 				TotalHarga: 0,
 			}
 
-			// Loop per-daily meal
-			for meal := 0; meal < mealsPerDay; meal++ {
-				// randomize meal selection
-				index := day*mealsPerDay + meal
-
-				// Append meal if not out of index bond
-				if index < len(bestCombination) && totalSeluruhHarga <= budget {
-					jadwal.Menu = append(jadwal.Menu, bestCombination[index])
-					jadwal.TotalHarga += bestCombination[index].Harga
-					totalSeluruhHarga += bestCombination[index].Harga
-				} else {
-					jadwal.Menu = append(jadwal.Menu, entities.Makanan{
-						ID:     0,
-						Nama:   "-",
-						Harga:  0,
-						Rating: 0,
-						Jarak:  0,
-						Lokasi: "",
-					})
-				}
+			for _, food := range meals {
+				jadwal.Menu = append(jadwal.Menu, food)
+				jadwal.TotalHarga += food.Harga
+				totalSeluruhHarga += food.Harga
 			}
 
 			mealPlans = append(mealPlans, jadwal)
 		}
-
 	}
 
 	return mealPlans
 }
+

@@ -51,28 +51,29 @@ func foodsData() []Food {
 }
 
 // Fungsi brute force untuk mencari kombinasi makanan terbaik
-func bruteForce(foods []Food, budget float64, mealsPerWeek int) ([]Food, float64) {
+func bruteForce(foods []Food, budget float64, mealsPerWeek int) ([]Food, float64, int) {
 	n := len(foods)
 	maxRating := 0.0
 	bestCombination := []Food{}
+	totalCombinations := 0 // Menyimpan jumlah kombinasi yang telah diperiksa
 
 	// Fungsi rekursif untuk memeriksa semua kombinasi
-	var findCombination func(currentCombination []Food, currentBudget, currentRating float64, start int) // Deklarasi variabel findCombination dengan tipe data function
-	findCombination = func(currentCombination []Food, currentBudget, currentRating float64, start int) { // Mendefinisikan variabel findCOmbination dengan function rekursif
+	var findCombination func(currentCombination []Food, currentBudget, currentRating float64, start int)
+	findCombination = func(currentCombination []Food, currentBudget, currentRating float64, start int) {
 		// Jika jumlah makanan dalam kombinasi sesuai kebutuhan
 		if len(currentCombination) == mealsPerWeek {
+			totalCombinations++
 			if currentRating > maxRating {
 				maxRating = currentRating
-				bestCombination = make([]Food, mealsPerWeek) // Mendefinisikan variabel bestCombination sebagai array kosong bertipe data []Food dengan length-nya sebanyak mealsPerWeek
-				for i := 0; i < mealsPerWeek; i++ {
-					bestCombination[i] = currentCombination[i]
-				}
+				bestCombination = make([]Food, mealsPerWeek)
+				copy(bestCombination, currentCombination)
 			}
 			return
 		}
 
 		// Memeriksa semua kombinasi
 		for i := start; i < n; i++ {
+			totalCombinations++
 			food := foods[i]
 			if currentBudget+food.price <= budget {
 				findCombination(append(currentCombination, food), currentBudget+food.price, currentRating+food.rating, i+1)
@@ -83,7 +84,7 @@ func bruteForce(foods []Food, budget float64, mealsPerWeek int) ([]Food, float64
 	// Memulai pencarian dari kombinasi kosong
 	findCombination([]Food{}, 0, 0, 0)
 
-	return bestCombination, maxRating
+	return bestCombination, maxRating, totalCombinations
 }
 
 func main() {
@@ -95,8 +96,13 @@ func main() {
 	var mealsPerDay int
 	fmt.Println("Masukkan budget makan per minggu: ")
 	fmt.Scan(&budget)
-	fmt.Println("Masukkan berapa kali makan per hari (2-5 kali): ")
+	fmt.Println("Masukkan berapa kali makan per hari (2-4 kali): ")
 	fmt.Scan(&mealsPerDay)
+
+	if mealsPerDay < 2 || mealsPerDay > 4 {
+		fmt.Println("Jumlah kali makan per hari tidak valid.")
+		return
+	}
 
 	// Hitung jumlah makanan yang dibutuhkan
 	neededMeals := 7 * mealsPerDay
@@ -105,8 +111,7 @@ func main() {
 	start := time.Now()
 
 	// Mencari kombinasi makanan terbaik
-	bestCombination, maxRating := bruteForce(foods, budget, neededMeals)
-	maxRating = maxRating
+	bestCombination, maxRating, totalCombinations := bruteForce(foods, budget, neededMeals)
 
 	// Hitung waktu eksekusi
 	elapsed := time.Since(start)
@@ -125,13 +130,14 @@ func main() {
 			}
 		}
 
-		// Tampilkan total harga dan total rating
+		// Tampilkan total harga, total rating, dan jumlah kombinasi yang diperiksa
 		totalPrice := 0.0
 		for i := 0; i < neededMeals; i++ {
 			totalPrice += bestCombination[i].price
 		}
 		fmt.Printf("Total harga: %.2f\n", totalPrice)
 		fmt.Printf("Total rating: %.2f\n", maxRating)
+		fmt.Printf("Jumlah kombinasi yang diperiksa: %d\n", totalCombinations)
 	}
 
 	// Tampilkan lama waktu running program

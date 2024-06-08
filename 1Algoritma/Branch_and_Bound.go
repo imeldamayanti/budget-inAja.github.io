@@ -16,7 +16,8 @@ type Food struct {
 	location string
 }
 
-func FoodsData() []Food {
+// DataFoods mengisi data makanan
+func DataFoods() []Food {
 	return []Food{
 		{"Ayam Gepuk Pak Gembus", 24, 4.4, 1.2, "https://maps.app.goo.gl/5Ss9Ry4gCaM1GV7z6"},
 		{"Mie Ayam Baso Budi", 14, 4.8, 1, "https://maps.app.goo.gl/BtxLJo47FzSzrCmL9"},
@@ -57,7 +58,7 @@ type Node struct {
 	rating   float64
 	price    float64
 	bound    float64
-	contains []int
+	included []bool
 	index    int // index diperlukan oleh heap interface
 }
 
@@ -127,7 +128,7 @@ func branchAndBound(foods []Food, budget float64, mealsPerWeek int) ([]int, int)
 	pq := make(PriorityQueue, 0)
 	heap.Init(&pq)
 
-	u := &Node{level: -1, rating: 0, price: 0, contains: nil}
+	u := &Node{level: -1, rating: 0, price: 0, included: make([]bool, n)}
 	maxRating := 0.0
 	var bestFoods []int
 	nodeCount := 0
@@ -140,12 +141,15 @@ func branchAndBound(foods []Food, budget float64, mealsPerWeek int) ([]int, int)
 		u = heap.Pop(&pq).(*Node)
 		if u.bound > maxRating {
 			if u.level+1 < n { // Ensure we don't go out of bounds
-				v := &Node{level: u.level + 1, rating: u.rating + foods[u.level+1].rating, price: u.price + foods[u.level+1].price, contains: append(u.contains, u.level+1)}
+				// Menambahkan item ke dalam node
+				v := &Node{level: u.level + 1, rating: u.rating + foods[u.level+1].rating, price: u.price + foods[u.level+1].price, included: make([]bool, n)}
+				copy(v.included, u.included)
+				v.included[u.level+1] = true
 				nodeCount++
 
-				if v.price <= budget && v.rating > maxRating && len(v.contains) == mealsPerWeek {
+				if v.price <= budget && v.rating > maxRating && countTrue(v.included) == mealsPerWeek {
 					maxRating = v.rating
-					bestFoods = v.contains
+					bestFoods = getIncludedItems(v.included)
 				}
 
 				v.bound = getBound(v, n, budget, foods)
@@ -153,7 +157,9 @@ func branchAndBound(foods []Food, budget float64, mealsPerWeek int) ([]int, int)
 					heap.Push(&pq, v)
 				}
 
-				v2 := &Node{level: u.level + 1, rating: u.rating, price: u.price, contains: append([]int(nil), u.contains...)}
+				// Tidak menambahkan item ke dalam node
+				v2 := &Node{level: u.level + 1, rating: u.rating, price: u.price, included: make([]bool, n)}
+				copy(v2.included, u.included)
 				nodeCount++
 				v2.bound = getBound(v2, n, budget, foods)
 				if v2.bound > maxRating {
@@ -164,6 +170,26 @@ func branchAndBound(foods []Food, budget float64, mealsPerWeek int) ([]int, int)
 	}
 
 	return bestFoods, nodeCount
+}
+
+func countTrue(arr []bool) int {
+	count := 0
+	for _, v := range arr {
+		if v {
+			count++
+		}
+	}
+	return count
+}
+
+func getIncludedItems(included []bool) []int {
+	var items []int
+	for i, v := range included {
+		if v {
+			items = append(items, i)
+		}
+	}
+	return items
 }
 
 // Fungsi untuk menemukan kombinasi makanan optimal
@@ -192,7 +218,7 @@ func mapFoodsPerDay(foods []Food, foodIndices []int, mealsPerDay int) map[string
 
 func main() {
 	// Data makanan yang tersedia
-	foods := FoodsData()
+	foods := DataFoods()
 
 	// Input dari user
 	var budget float64
@@ -235,7 +261,7 @@ func main() {
 		}
 		fmt.Printf("\nTotal harga: %.2f\n", totalPrice)
 		fmt.Printf("Total rating: %.2f\n", totalRating)
-		fmt.Printf("Durasi running: %s\n", duration)
+		fmt.Printf("Durasi running: %s\n", duration*100)
 		fmt.Printf("Jumlah node yang terbentuk: %d\n", nodeCount)
 	}
 }
